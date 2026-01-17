@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import * as configModule from '../../../../payload.config'
 import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
 import { importMap } from '../importMap'
-import { isRedirectError } from 'next/dist/client/components/redirect'
+// import { isRedirectError } from 'next/dist/client/components/redirect'
 
 const config = configModule.default || configModule
 
@@ -41,7 +41,7 @@ const Page = async ({ params, searchParams }: Args) => {
             importMap
         })
     } catch (error) {
-        if (isRedirectError(error)) {
+        if (typeof error === 'object' && error !== null && 'digest' in error && (error as any).digest?.startsWith('NEXT_REDIRECT')) {
             throw error
         }
         console.error('--- DEBUG ERROR CAUGHT ---')
