@@ -17,7 +17,19 @@ type Args = {
 export const generateMetadata = async ({ params, searchParams }: Args): Promise<Metadata> =>
     generatePageMetadata({ config, params, searchParams })
 
-const Page = async ({ params, searchParams }: Args) =>
-    RootPage({ config: Promise.resolve(config), params, searchParams, importMap })
+const Page = async ({ params, searchParams }: Args) => {
+    console.log('--- DEBUG PAGE ---')
+    console.log('Config exists:', !!config)
+    console.log('ImportMap exists:', !!importMap)
+    console.log('ImportMap content:', importMap)
+    console.log('Params:', params)
+
+    return RootPage({
+        config: Promise.resolve(config),
+        params,
+        searchParams,
+        importMap
+    })
+}
 
 export default Page
