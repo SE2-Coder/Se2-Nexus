@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: se2-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: se2admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: se2brain
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - se2-network
+    ports:
+      - "27017:27017"
+
+  se2-brain:
+    build:
+      context: ./se2-brain
+      dockerfile: Dockerfile
+    container_name: se2-brain
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    environment:
+      DATABASE_URI: mongodb://se2admin:${MONGO_PASSWORD}@mongodb:27017/se2brain?authSource=admin
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      SERVER_URL: ${SERVER_URL}
+      NODE_ENV: production
+    networks:
+      - se2-network
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  se2-network:
+    driver: bridge
