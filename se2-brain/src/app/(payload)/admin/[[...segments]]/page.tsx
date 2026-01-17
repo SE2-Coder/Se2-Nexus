@@ -47,12 +47,20 @@ const Page = async ({ params, searchParams }: Args) => {
     }
 
     try {
+        /*
         return await RootPage({
             config: Promise.resolve(resolvedConfig),
             params,
             searchParams,
             importMap
         })
+        */
+        return (
+            <div>
+                <h1>DEBUG MODE</h1>
+                <pre>{JSON.stringify(resolvedConfig?.admin, null, 2)}</pre>
+            </div>
+        )
     } catch (error) {
         if (typeof error === 'object' && error !== null && 'digest' in error && (error as any).digest?.startsWith('NEXT_REDIRECT')) {
             throw error
