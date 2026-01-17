@@ -46,7 +46,7 @@ export const CreateFirstUserClient = ({
         formState: prevFormState,
         submitted
     }: any) => {
-        const controller = handleAbortRef(abortOnChangeRef);
+        const controller = handleAbortRef(abortOnChangeRef as any);
         const response = await getFormState({
             collectionSlug: userSlug,
             docPermissions,
