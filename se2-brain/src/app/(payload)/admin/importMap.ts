@@ -1,1 +1,22 @@
-export const importMap = {}
+import { CreateFirstUserView } from '@payloadcms/next/views'
+import { DefaultTemplate } from '@payloadcms/next/templates'
+
+// Try to import client components directly (may require ts-ignore)
+// @ts-ignore
+import { CreateFirstUserClient } from '@payloadcms/next/dist/views/CreateFirstUser/index.client.js'
+// @ts-ignore
+import { CollectionCards } from '@payloadcms/ui/rsc'
+
+export const importMap = {
+    // Critical for Create First User
+    "@payloadcms/next/dist/views/CreateFirstUser/index.client.js#CreateFirstUserClient": CreateFirstUserClient,
+
+    // Server View (might not be needed in map but good fallback)
+    "@payloadcms/next/views#CreateFirstUserView": CreateFirstUserView,
+
+    // Template
+    "@payloadcms/next/templates#DefaultTemplate": DefaultTemplate,
+
+    // The key that WAS found (mock it or provide real one)
+    "@payloadcms/ui/rsc#CollectionCards": CollectionCards
+}
