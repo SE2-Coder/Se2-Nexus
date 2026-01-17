@@ -27,9 +27,7 @@ export default buildConfig({
     csrf: [process.env.SERVER_URL || ''].filter(Boolean),
     // Trust proxy for Dokploy/Traefik to handle SSL correctly
     // defaults to false, should be true behind a proxy
-    manifest: {
-        // customize admin manifest
-    },
+
     db: mongooseAdapter({
         url: process.env.DATABASE_URI || '',
     }),
