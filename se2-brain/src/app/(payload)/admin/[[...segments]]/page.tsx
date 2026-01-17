@@ -1,4 +1,4 @@
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. - DEBUG IMPORTMAP 2 */
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. - DEBUG ROUTES 1 */
 import type { Metadata } from 'next'
 
 import * as configModule from '../../../../payload.config'
