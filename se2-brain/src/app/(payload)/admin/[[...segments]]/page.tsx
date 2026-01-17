@@ -47,6 +47,11 @@ const Page = async ({ params, searchParams }: Args) => {
     }
 
     try {
+        if (resolvedConfig) {
+            console.log('Debug Admin Routes:', resolvedConfig.admin?.routes)
+            console.log('Debug Root Routes:', resolvedConfig.routes)
+        }
+
         return await RootPage({
             config: Promise.resolve(resolvedConfig),
             params,
