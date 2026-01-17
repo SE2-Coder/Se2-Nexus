@@ -1,6 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig } from 'payload/config'
+import { buildConfig } from 'payload'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
