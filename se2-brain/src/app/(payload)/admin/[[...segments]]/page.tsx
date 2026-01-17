@@ -1,4 +1,4 @@
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. - DEBUG IMPORT 1 */
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. - DEBUG ISOLATION 2 */
 import type { Metadata } from 'next'
 
 import * as configModule from '../../../../payload.config'
