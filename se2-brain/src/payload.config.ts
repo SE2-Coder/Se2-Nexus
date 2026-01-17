@@ -25,8 +25,7 @@ export default buildConfig({
     serverURL: process.env.SERVER_URL || '',
     cors: '*', // Debug: allow all origins to fix 400 error
     csrf: [], // Debug: disable csrf to allow initial connection
-    // Trust proxy for Dokploy/Traefik to handle SSL correctly
-    trustProxy: true,
+
 
     db: mongooseAdapter({
         url: process.env.DATABASE_URI || '',
