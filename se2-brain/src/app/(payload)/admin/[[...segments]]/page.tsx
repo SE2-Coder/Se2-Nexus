@@ -1,4 +1,4 @@
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. - FORCE DEPLOY 1 */
 import type { Metadata } from 'next'
 
 import config from '@payload-config'
