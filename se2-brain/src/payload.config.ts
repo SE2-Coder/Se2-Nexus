@@ -11,6 +11,8 @@ import { OTPEntries } from './collections/OTPEntries'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+console.log('--- PAYLOAD CONFIG EVALUATING ---')
+
 export default buildConfig({
     admin: {
         user: Users.slug,
