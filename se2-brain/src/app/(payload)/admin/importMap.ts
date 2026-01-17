@@ -1,14 +1,13 @@
 import { CreateFirstUserView } from '@payloadcms/next/views'
 import { DefaultTemplate } from '@payloadcms/next/templates'
 
-// Try to import client components directly (may require ts-ignore)
-// @ts-ignore
-import { CreateFirstUserClient } from '@payloadcms/next/dist/views/CreateFirstUser/index.client.js'
+// Vendor component to bypass export restrictions
+import { CreateFirstUserClient } from './components/CreateFirstUserClient'
 // @ts-ignore
 import { CollectionCards } from '@payloadcms/ui/rsc'
 
 export const importMap = {
-    // Critical for Create First User
+    // Critical for Create First User - Mapped to our Local Vendor File
     "@payloadcms/next/dist/views/CreateFirstUser/index.client.js#CreateFirstUserClient": CreateFirstUserClient,
 
     // Server View (might not be needed in map but good fallback)
