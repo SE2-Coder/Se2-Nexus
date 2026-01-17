@@ -18,13 +18,16 @@ type Args = {
 }
 
 export const generateMetadata = async ({ params, searchParams }: Args): Promise<Metadata> => {
-    console.log('--- DEBUG METADATA ---')
+    console.log('--- DEBUG METADATA: SKIPPED ---')
+    return { title: 'Payload Admin' }
+    /*
     try {
         return await generatePageMetadata({ config, params, searchParams })
     } catch (e) {
         console.error('Metadata generation failed:', e)
         return { title: 'Admin' }
     }
+    */
 }
 
 const Page = async ({ params, searchParams }: Args) => {
