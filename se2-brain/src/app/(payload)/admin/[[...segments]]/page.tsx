@@ -29,13 +29,23 @@ export const generateMetadata = async ({ params, searchParams }: Args): Promise<
 
 const Page = async ({ params, searchParams }: Args) => {
     console.log('--- DEBUG PAGE ---')
-    console.log('Config Module Keys:', Object.keys(configModule))
-    console.log('Config Module Default:', !!configModule.default)
-    console.log('Resolved Config Keys:', Object.keys(config || {}))
+
+    let resolvedConfig: any = config
+    if (config instanceof Promise) {
+        console.log('Config is a Promise, awaiting...')
+        resolvedConfig = await config
+    }
+
+    console.log('Resolved Config Type:', typeof resolvedConfig)
+    try {
+        console.log('Final Config Keys:', Object.keys(resolvedConfig || {}))
+    } catch (e) {
+        console.error('Error logging keys', e)
+    }
 
     try {
         return await RootPage({
-            config: Promise.resolve(config),
+            config: Promise.resolve(resolvedConfig),
             params,
             searchParams,
             importMap
