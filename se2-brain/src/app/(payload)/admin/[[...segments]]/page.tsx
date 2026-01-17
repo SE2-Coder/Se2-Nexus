@@ -24,15 +24,26 @@ export const generateMetadata = async ({ params, searchParams }: Args): Promise<
 
 const Page = async ({ params, searchParams }: Args) => {
     console.log('--- DEBUG PAGE ---')
-    console.log('Config exists:', !!config)
+    console.log('Config type:', typeof config)
+    try {
+        console.log('Config keys:', Object.keys(config))
+    } catch (e) {
+        console.log('Error listing config keys:', e)
+    }
     console.log('ImportMap exists:', !!importMap)
 
-    return RootPage({
-        config: Promise.resolve(config),
-        params,
-        searchParams,
-        importMap
-    })
+    try {
+        return await RootPage({
+            config: Promise.resolve(config),
+            params,
+            searchParams,
+            importMap
+        })
+    } catch (error) {
+        console.error('--- DEBUG ERROR CAUGHT ---')
+        console.error(error)
+        throw error
+    }
 }
 
 export default Page
