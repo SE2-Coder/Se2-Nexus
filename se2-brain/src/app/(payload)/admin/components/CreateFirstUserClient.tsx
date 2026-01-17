@@ -36,7 +36,7 @@ export const CreateFirstUserClient = ({
     const { getFormState } = useServerFunctions();
     const { t } = useTranslation();
     const { setUser } = useAuth();
-    const abortOnChangeRef = useRef(null);
+    const abortOnChangeRef = useRef<AbortController | null>(null);
 
     const collectionConfig = getEntityConfig({
         collectionSlug: userSlug
@@ -77,10 +77,7 @@ export const CreateFirstUserClient = ({
     return (
         <Form
             action={formatAdminURL({
-                adminRoute: admin, // Note: original code used apiRoute and path directly but formatAdminURL might expect specific args. 
-                // Original source: action: formatAdminURL({ apiRoute, path: `/${userSlug}/first-register` })
-                // I will copy exact source logic if possible, but type definition might vary.
-                // Let's assume the source code was correct for the version installed.
+                apiRoute,
                 path: `/${userSlug}/first-register`
             })}
             initialState={{
