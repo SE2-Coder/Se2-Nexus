@@ -11,7 +11,7 @@
         "lint": "next lint",
         "generate:types": "payload generate:types",
         "payload": "payload",
-        "postinstall": "node scripts/patch-payload.js"
+        "postinstall": "node scripts/patch-payload.cjs"
     },
     "dependencies": {
         "@payloadcms/db-mongodb": "latest",
