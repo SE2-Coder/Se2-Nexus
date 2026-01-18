@@ -53,7 +53,7 @@ const Page = async ({ params, searchParams }: Args) => {
         }
 
         return await RootPage({
-            config: Promise.resolve(resolvedConfig),
+            config,
             params,
             searchParams,
             importMap
