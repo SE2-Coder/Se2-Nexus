@@ -61,6 +61,7 @@ export const CreateFirstUserClient = ({
         if (response && response.state) {
             return response.state;
         }
+        return prevFormState;
     }, [userSlug, getFormState, docPermissions, docPreferences]);
 
     const handleFirstRegister = (data: any) => {
