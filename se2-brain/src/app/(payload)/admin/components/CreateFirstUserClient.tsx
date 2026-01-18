@@ -62,7 +62,7 @@ export const CreateFirstUserClient = ({
             operation: 'create',
             schemaPath: userSlug,
             signal: controller.signal,
-            skipValidation: !submitted
+
         });
         abortOnChangeRef.current = null;
         if (response && response.state) {

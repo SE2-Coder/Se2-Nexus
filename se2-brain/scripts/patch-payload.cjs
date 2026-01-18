@@ -14,11 +14,12 @@ if (fs.existsSync(targetFile)) {
 
     // Pattern to fix: initReq({ importMap, ... }) crashing when importMap is not empty
     // We replace the importMap passed to initReq with an empty object {}
-    if (content.includes('importMap,') && content.includes("key: 'initPage'")) {
-        console.log('Found vulnerable initReq call in @payloadcms/next');
+    if (content.includes('importMap') && content.includes("key: 'initPage'")) {
+        console.log('Found potential initReq call in @payloadcms/next');
 
+        // Handles both { importMap, key: 'initPage' } and { importMap: importMap, key: 'initPage' }
         const patched = content.replace(
-            /importMap,\s*key: 'initPage'/g,
+            /importMap(: importMap)?,\s*key: 'initPage'/g,
             "importMap: {}, key: 'initPage'"
         );
 
