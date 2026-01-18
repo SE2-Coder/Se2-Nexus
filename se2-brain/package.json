@@ -6,12 +6,11 @@
     "type": "module",
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
         "start": "next start",
         "lint": "next lint",
         "generate:types": "payload generate:types",
-        "payload": "payload",
-        "postinstall": "node scripts/patch-payload.js"
+        "payload": "payload"
     },
     "dependencies": {
         "@payloadcms/db-mongodb": "latest",

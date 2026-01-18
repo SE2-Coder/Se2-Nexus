@@ -29,67 +29,15 @@ export const generateMetadata = async ({ params, searchParams }: Args): Promise<
 }
 
 const Page = async ({ params, searchParams }: Args) => {
-    console.log('--- DEBUG PAGE ---')
+    const resolvedConfig = await config
+    const importMap = await configModule.importMap || {} // Fallback to empty if not found, or let Payload handle it
 
-    let resolvedConfig: any = config
-    if (config instanceof Promise) {
-        // console.log('Config is a Promise, awaiting...')
-        resolvedConfig = await config
-    }
-
-    // Log ImportMap details to verify generation
-    try {
-        const mapKeys = Object.keys(importMap)
-        console.log(`ImportMap Keys Count: ${mapKeys.length}`)
-        console.log('ImportMap Sample Keys:', mapKeys.slice(0, 5))
-    } catch (e) {
-        console.error('Error logging importMap:', e)
-    }
-
-    try {
-        if (resolvedConfig) {
-            console.log('Debug Admin Routes:', resolvedConfig.admin?.routes)
-            console.log('Debug Root Routes:', resolvedConfig.routes)
-        }
-
-        const paramsValue = await params;
-        const segments = paramsValue?.segments || [];
-        const isCreateFirstUser = segments.includes('create-first-user');
-
-        if (isCreateFirstUser) {
-            console.log('!!! DEBUG: HITTING CREATE-FIRST-USER ROUTE !!!');
-            // return (
-            //    <div style={{ padding: '50px', border: '5px solid purple' }}>
-            //       <h1>Manual Intercept: Create First User</h1>
-            //       <p>We reached the route safely. RootPage not called yet.</p>
-            //    </div>
-            // );
-        }
-
-        return await RootPage({
-            config,
-            params,
-            searchParams,
-            importMap
-        })
-        // return (
-        //     <div style={{ padding: '50px', border: '5px solid blue' }}>
-        //         <h1>CRITICAL DEBUG: RootPage Bypassed</h1>
-        //         <p>If you see this, the config/routes are fine, but RootPage() itself is crashing.</p>
-        //         <pre>{JSON.stringify({
-        //             adminRoute: resolvedConfig?.admin?.routes,
-        //             rootRoutes: resolvedConfig?.routes 
-        //         }, null, 2)}</pre>
-        //     </div>
-        // )
-    } catch (error) {
-        if (typeof error === 'object' && error !== null && 'digest' in error && (error as any).digest?.startsWith('NEXT_REDIRECT')) {
-            throw error
-        }
-        console.error('--- DEBUG ERROR CAUGHT ---')
-        console.error(error)
-        throw error
-    }
+    return await RootPage({
+        config,
+        params,
+        searchParams,
+        importMap
+    })
 }
 
 export default Page
