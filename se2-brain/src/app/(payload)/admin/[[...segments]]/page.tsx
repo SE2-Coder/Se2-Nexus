@@ -52,22 +52,22 @@ const Page = async ({ params, searchParams }: Args) => {
             console.log('Debug Root Routes:', resolvedConfig.routes)
         }
 
-        // return await RootPage({
-        //     config, 
-        //     params,
-        //     searchParams,
-        //     importMap
-        // })
-        return (
-            <div style={{ padding: '50px', border: '5px solid blue' }}>
-                <h1>CRITICAL DEBUG: RootPage Bypassed</h1>
-                <p>If you see this, the config/routes are fine, but RootPage() itself is crashing.</p>
-                <pre>{JSON.stringify({ 
-                    adminRoute: resolvedConfig?.admin?.routes,
-                    rootRoutes: resolvedConfig?.routes 
-                }, null, 2)}</pre>
-            </div>
-        )
+        return await RootPage({
+            config,
+            params,
+            searchParams,
+            importMap
+        })
+        // return (
+        //     <div style={{ padding: '50px', border: '5px solid blue' }}>
+        //         <h1>CRITICAL DEBUG: RootPage Bypassed</h1>
+        //         <p>If you see this, the config/routes are fine, but RootPage() itself is crashing.</p>
+        //         <pre>{JSON.stringify({ 
+        //             adminRoute: resolvedConfig?.admin?.routes,
+        //             rootRoutes: resolvedConfig?.routes 
+        //         }, null, 2)}</pre>
+        //     </div>
+        // )
     } catch (error) {
         if (typeof error === 'object' && error !== null && 'digest' in error && (error as any).digest?.startsWith('NEXT_REDIRECT')) {
             throw error
