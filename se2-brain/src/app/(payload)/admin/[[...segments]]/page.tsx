@@ -57,7 +57,7 @@ const Page = async ({ params, searchParams }: Args) => {
                 config,
                 params,
                 searchParams,
-                importMap // Restore importMap usage
+                importMap: {} // Force empty importMap to allow redirection
             })
         } catch (innerError: any) {
             if (
