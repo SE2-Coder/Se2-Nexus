@@ -23,6 +23,13 @@ export const CreateFirstUserClient = ({
     loginWithUsername,
     userSlug
 }: any) => {
+    const configContext = useConfig();
+
+    if (!configContext) {
+        console.warn('CreateFirstUserClient: No Config Context found');
+        return null;
+    }
+
     const {
         config: {
             routes: {
@@ -31,7 +38,7 @@ export const CreateFirstUserClient = ({
             }
         },
         getEntityConfig
-    } = useConfig();
+    } = configContext;
 
     const { getFormState } = useServerFunctions();
     const { t } = useTranslation();
