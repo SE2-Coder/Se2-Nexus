@@ -66,50 +66,17 @@ const Page = async ({ params, searchParams }: Args) => {
             // );
         }
 
-        // Test if ANY key crashes it, or just the meaningful one
-        const testMap = isCreateFirstUser ? {
-            "this_key_does_not_exist": importMap["@payloadcms/next/dist/views/CreateFirstUser/index.client.js#CreateFirstUserClient"] || (() => null)
-        } : {};
-
-        try {
-            return await RootPage({
-                config,
-                params,
-                searchParams,
-                importMap: testMap
-            })
-        } catch (innerError: any) {
-            if (
-                typeof innerError === 'object' &&
-                innerError !== null &&
-                (innerError.digest?.startsWith('NEXT_REDIRECT') || innerError.message === 'NEXT_REDIRECT')
-            ) {
-                throw innerError;
-            }
-            console.error('RootPage CRITICAL FAILURE:', innerError);
-            return (
-                <div style={{ padding: '50px', border: '5px solid red', color: 'red', backgroundColor: '#fff0f0' }}>
-                    <h1>RootPage Interface Crash</h1>
-                    <p>The RootPage() function threw an error during execution.</p>
-                    <pre style={{ overflow: 'auto' }}>
-                        {innerError?.toString()}
-                        {'\n'}
-                        {innerError?.stack}
-                    </pre>
-                    <hr />
-                    <h3>Config Debug:</h3>
-                    <pre>{JSON.stringify({
-                        adminRoute: resolvedConfig?.admin?.routes,
-                        rootRoutes: resolvedConfig?.routes
-                    }, null, 2)}</pre>
-                </div>
-            )
-        }
+        return await RootPage({
+            config,
+            params,
+            searchParams,
+            importMap
+        })
         // return (
         //     <div style={{ padding: '50px', border: '5px solid blue' }}>
         //         <h1>CRITICAL DEBUG: RootPage Bypassed</h1>
         //         <p>If you see this, the config/routes are fine, but RootPage() itself is crashing.</p>
-        //         <pre>{JSON.stringify({ 
+        //         <pre>{JSON.stringify({
         //             adminRoute: resolvedConfig?.admin?.routes,
         //             rootRoutes: resolvedConfig?.routes 
         //         }, null, 2)}</pre>
