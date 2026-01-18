@@ -12,28 +12,43 @@ console.log('Target:', targetFile);
 if (fs.existsSync(targetFile)) {
     let content = fs.readFileSync(targetFile, 'utf8');
 
-    // Pattern to fix: initReq({ importMap, ... }) crashing when importMap is not empty
-    // We replace the importMap passed to initReq with an empty object {}
-    if (content.includes('importMap') && content.includes('initPage')) {
-        console.log('Found potential initReq call area in @payloadcms/next');
+    // Patterns to look for:
+    // 1. { importMap, key: 'initPage' }
+    // 2. { importMap: importMap, key: 'initPage' }
+    // 3. { importMap: e, key: 'initPage' } (minified)
 
-        // More aggressive match: find any occurrence of importMap followed by key: 'initPage' within an object/args block
-        // This handles cases like: importMap,key:"initPage" or importMap:importMap,key:"initPage"
-        const patched = content.replace(
-            /importMap(:[ a-zA-Z]+)?,\s*key:\s*['"]initPage['"]/g,
-            "importMap: {}, key: 'initPage'"
-        );
+    const possiblePatterns = [
+        /importMap\s*,\s*key\s*:\s*['"]initPage['"]/g,
+        /importMap\s*:\s*[^,}]+\s*,\s*key\s*:\s*['"]initPage['"]/g
+    ];
 
-        if (content !== patched) {
-            fs.writeFileSync(targetFile, patched, 'utf8');
-            console.log('✅ SUCCESSFULLY PATCHED: @payloadcms/next/dist/views/Root/index.js');
-        } else {
-            console.log('⚠️ Pattern matched but replace failed.');
+    let patched = content;
+    let found = false;
+
+    for (const pattern of possiblePatterns) {
+        if (pattern.test(content)) {
+            console.log('Found patch target with pattern:', pattern);
+            patched = patched.replace(pattern, (match) => {
+                // Keep the key: 'initPage' part, but force importMap to {}
+                return match.replace(/importMap(\s*:\s*[^,]+)?/, "importMap: {}");
+            });
+            found = true;
         }
-    } else if (content.includes('importMap: {},')) {
-        console.log('ℹ️ File is already patched.');
+    }
+
+    if (found && content !== patched) {
+        fs.writeFileSync(targetFile, patched, 'utf8');
+        console.log('✅ SUCCESSFULLY PATCHED: @payloadcms/next/dist/views/Root/index.js');
     } else {
-        console.log('⚠️ Could not find specific pattern to patch. Check file content.');
+        console.log('⚠️ Could not find specific pattern to patch.');
+        // Debug: Log the vicinity of 'initPage' to see what the minifier did
+        const index = content.indexOf('initPage');
+        if (index !== -1) {
+            console.log('Code snippet found around initPage:');
+            console.log(content.substring(Math.max(0, index - 100), Math.min(content.length, index + 100)));
+        } else {
+            console.log('❌ Could not even find "initPage" in the file!');
+        }
     }
 } else {
     console.log('⚠️ Target file not found for patching.');
