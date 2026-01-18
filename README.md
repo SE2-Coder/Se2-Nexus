@@ -1,40 +1,60 @@
-# Se2-Nexus Ecosystem
+# Se2 Brain - Backend en Go
 
-> **The Central Nervous System for the Se2Code Microservices Suite.**
+Backend de alto rendimiento construido en Go con PostgreSQL.
 
-**Se2-Nexus** is a scalable, modular ecosystem designed to power next-generation applications with privacy, security, and user experience at the forefront. Built on a Dockerized microservices architecture, it serves as the foundation for a suite of interconnected tools starting with **Se2-Auth**.
+## Estructura del Proyecto
 
-## 🏗 Architecture
-
-The ecosystem is divided into discrete, containerized services managed via **Dokploy**:
-
-### 🧠 `se2-brain` (Backend Core)
-The single source of truth for identity and data persistence.
--   **Tech**: Payload CMS 3.0 (Next.js Native), MongoDB.
--   **Role**: Handles Users, Encrypted Data Blobs (Zero-Knowledge Architecture), and System Notifications.
--   **Security**: Stores 2FA secrets as encrypted strings; keys remain client-side.
-
-### 🔐 `se2-auth` (Frontend Application)
-*In Development* - A cross-platform 2FA Authenticator.
--   **Tech**: Next.js 14, TailwindCSS, CapacitorJS.
--   **Features**:
-    -   Smart Folders (Organize tokens by Client, Personal, Finance).
-    -   Offline-First PWA.
-    -   Biometric Unlock.
-
-## 🚀 Deployment
-
-This project is tailored for deployment on **Ubuntu VPS** using **Dokploy**.
-
-```bash
-# Structure
+```
 .
-├── se2-brain/        # Backend Service
-└── se2-auth/         # Frontend Service (Coming Soon)
+├── se2-brain/          # Backend en Go
+│   ├── cmd/            # Punto de entrada
+│   ├── internal/       # Lógica de negocio
+│   ├── Dockerfile      # Imagen del backend
+│   └── go.mod
+├── database/           # PostgreSQL
+│   ├── init/           # Scripts SQL de inicialización
+│   │   └── 01-schema.sql
+│   └── Dockerfile      # Imagen de PostgreSQL
+├── docker-compose.yml  # Orquestación completa
+└── .env.example        # Template de variables
 ```
 
-## 🛡 Privacy Pivot
-Unlike SaaS alternatives (Firebase, Auth0), **Se2-Nexus** guarantees 100% data ownership. No third-party tracking, no data mining.
+## Despliegue Local
 
----
-*Built with ❤️ by Se2Code Team.*
+```bash
+# 1. Configurar variables de entorno
+cp .env.example .env
+# Edita .env con tus valores
+
+# 2. Levantar todo el stack
+docker-compose up -d
+
+# 3. Verificar
+curl http://localhost:8080/health
+```
+
+## Despliegue en Dokploy
+
+1. **Crear aplicación tipo "Docker Compose"**
+2. **Configurar:**
+   - Repository: `Se2-Nexus`
+   - Branch: `main`
+   - Compose File: `docker-compose.yml`
+3. **Variables de entorno:**
+   - `DB_PASSWORD`: [tu-password-segura]
+   - `JWT_SECRET`: [tu-secret-de-32-chars]
+4. **Deploy**
+
+## API Endpoints
+
+- `GET /health` - Health check
+- `POST /api/register` - Registro de usuario
+- `POST /api/login` - Login (retorna JWT)
+
+## Stack Tecnológico
+
+- **Backend:** Go 1.22 + Gin
+- **Database:** PostgreSQL 16
+- **Auth:** JWT + Bcrypt
+- **Security:** AES-256-GCM
+- **2FA:** TOTP (RFC 6238)
