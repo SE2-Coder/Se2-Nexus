@@ -70,7 +70,9 @@ export const CreateFirstUserClient = ({
     useEffect(() => {
         const abortOnChange = abortOnChangeRef.current;
         return () => {
-            abortAndIgnore(abortOnChange);
+            if (abortOnChange) {
+                abortAndIgnore(abortOnChange);
+            }
         };
     }, []);
 
