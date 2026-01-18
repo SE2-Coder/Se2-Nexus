@@ -52,12 +52,26 @@ const Page = async ({ params, searchParams }: Args) => {
             console.log('Debug Root Routes:', resolvedConfig.routes)
         }
 
+        const paramsValue = await params;
+        const segments = paramsValue?.segments || [];
+        const isCreateFirstUser = segments.includes('create-first-user');
+
+        if (isCreateFirstUser) {
+            console.log('!!! DEBUG: HITTING CREATE-FIRST-USER ROUTE !!!');
+            // return (
+            //    <div style={{ padding: '50px', border: '5px solid purple' }}>
+            //       <h1>Manual Intercept: Create First User</h1>
+            //       <p>We reached the route safely. RootPage not called yet.</p>
+            //    </div>
+            // );
+        }
+
         try {
             return await RootPage({
                 config,
                 params,
                 searchParams,
-                importMap: {} // Force empty importMap to allow redirection
+                importMap: isCreateFirstUser ? importMap : {} // Try strict importMap ONLY for this route
             })
         } catch (innerError: any) {
             if (
