@@ -85,55 +85,9 @@ export const CreateFirstUserClient = ({
     }, []);
 
     return (
-        <Form
-            action={formatAdminURL({
-                apiRoute,
-                path: `/${userSlug}/first-register`
-            })}
-            initialState={{
-                ...initialState,
-                'confirm-password': {
-                    ...initialState['confirm-password'],
-                    valid: initialState['confirm-password']['valid'] || false,
-                    value: initialState['confirm-password']['value'] || ''
-                }
-            }}
-            method="POST"
-            onChange={[onChange]}
-            onSuccess={handleFirstRegister}
-            redirect={admin}
-            validationOperation="create"
-        >
-            {/* <EmailAndUsernameFields
-                className="emailAndUsername"
-                loginWithUsername={loginWithUsername}
-                operation="create"
-                readOnly={false}
-                t={t as any}
-            /> */}
-            {/* <PasswordField
-                autoComplete="off"
-                field={{
-                    name: 'password',
-                    label: t('authentication:newPassword'),
-                    required: true
-                }}
-                path="password"
-            /> */}
-            {/* <ConfirmPasswordField /> */}
-            {/* <RenderFields
-                fields={collectionConfig.fields}
-                forceRender={true}
-                parentIndexPath=""
-                parentPath=""
-                parentSchemaPath={userSlug}
-                permissions={true}
-                readOnly={false}
-            /> */}
-            <div className="debug-placeholder">DEBUG: Form Content Removed</div>
-            <FormSubmit size="large">
-                {t('general:create')}
-            </FormSubmit>
-        </Form>
+        <div className="p-4 border border-red-500">
+            <h1>Sanity Check: Create First User Client Loaded</h1>
+            <p>If you see this, the crash is in the Form or its children.</p>
+        </div>
     );
 };
