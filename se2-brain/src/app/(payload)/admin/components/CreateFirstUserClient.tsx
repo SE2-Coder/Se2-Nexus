@@ -13,7 +13,7 @@ import {
     useTranslation
 } from '@payloadcms/ui';
 import { abortAndIgnore, handleAbortRef } from '@payloadcms/ui/shared';
-import { formatAdminURL } from 'payload/shared';
+
 import React, { useEffect, useCallback, useRef } from 'react';
 
 export const CreateFirstUserClient = ({
