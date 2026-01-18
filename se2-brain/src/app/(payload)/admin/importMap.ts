@@ -12,11 +12,11 @@ export const importMap = {
     "@payloadcms/next/dist/views/CreateFirstUser/index.client.js#CreateFirstUserClient": DummyClient,
 
     // Server View (might not be needed in map but good fallback)
-    "@payloadcms/next/views#CreateFirstUserView": CreateFirstUserView,
+    // "@payloadcms/next/views#CreateFirstUserView": CreateFirstUserView,
 
     // Template
-    "@payloadcms/next/templates#DefaultTemplate": DefaultTemplate,
+    // "@payloadcms/next/templates#DefaultTemplate": DefaultTemplate,
 
     // The key that WAS found (mock it or provide real one)
-    "@payloadcms/ui/rsc#CollectionCards": CollectionCards
+    // "@payloadcms/ui/rsc#CollectionCards": CollectionCards
 }

@@ -57,9 +57,16 @@ const Page = async ({ params, searchParams }: Args) => {
                 config,
                 params,
                 searchParams,
-                importMap: {} // DEBUG: Empty importMap to rule out component issues
+                importMap // Restore importMap usage
             })
         } catch (innerError: any) {
+            if (
+                typeof innerError === 'object' &&
+                innerError !== null &&
+                (innerError.digest?.startsWith('NEXT_REDIRECT') || innerError.message === 'NEXT_REDIRECT')
+            ) {
+                throw innerError;
+            }
             console.error('RootPage CRITICAL FAILURE:', innerError);
             return (
                 <div style={{ padding: '50px', border: '5px solid red', color: 'red', backgroundColor: '#fff0f0' }}>
