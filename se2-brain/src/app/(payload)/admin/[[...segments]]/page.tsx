@@ -30,7 +30,7 @@ export const generateMetadata = async ({ params, searchParams }: Args): Promise<
 
 const Page = async ({ params, searchParams }: Args) => {
     const resolvedConfig = await config
-    const importMap = await configModule.importMap || {} // Fallback to empty if not found, or let Payload handle it
+    const importMap = await (configModule as any).importMap || {} // Fallback to empty if not found, or let Payload handle it
 
     return await RootPage({
         config,
