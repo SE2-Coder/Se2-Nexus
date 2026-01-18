@@ -1,9 +1,5 @@
-import { CreateFirstUserView } from '@payloadcms/next/views'
-import { DefaultTemplate } from '@payloadcms/next/templates'
-
 import { CreateFirstUserClient } from './components/CreateFirstUserClient'
-// @ts-ignore
-import { CollectionCards } from '@payloadcms/ui/rsc'
+
 
 export const importMap = {
     // Critical for Create First User - Mapped to our Local Vendor File
