@@ -52,12 +52,33 @@ const Page = async ({ params, searchParams }: Args) => {
             console.log('Debug Root Routes:', resolvedConfig.routes)
         }
 
-        return await RootPage({
-            config,
-            params,
-            searchParams,
-            importMap
-        })
+        try {
+            return await RootPage({
+                config,
+                params,
+                searchParams,
+                importMap: {} // DEBUG: Empty importMap to rule out component issues
+            })
+        } catch (innerError: any) {
+            console.error('RootPage CRITICAL FAILURE:', innerError);
+            return (
+                <div style={{ padding: '50px', border: '5px solid red', color: 'red', backgroundColor: '#fff0f0' }}>
+                    <h1>RootPage Interface Crash</h1>
+                    <p>The RootPage() function threw an error during execution.</p>
+                    <pre style={{ overflow: 'auto' }}>
+                        {innerError?.toString()}
+                        {'\n'}
+                        {innerError?.stack}
+                    </pre>
+                    <hr />
+                    <h3>Config Debug:</h3>
+                    <pre>{JSON.stringify({
+                        adminRoute: resolvedConfig?.admin?.routes,
+                        rootRoutes: resolvedConfig?.routes
+                    }, null, 2)}</pre>
+                </div>
+            )
+        }
         // return (
         //     <div style={{ padding: '50px', border: '5px solid blue' }}>
         //         <h1>CRITICAL DEBUG: RootPage Bypassed</h1>
