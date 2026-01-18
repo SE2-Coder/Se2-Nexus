@@ -66,12 +66,17 @@ const Page = async ({ params, searchParams }: Args) => {
             // );
         }
 
+        // Test if ANY key crashes it, or just the meaningful one
+        const testMap = isCreateFirstUser ? {
+            "this_key_does_not_exist": importMap["@payloadcms/next/dist/views/CreateFirstUser/index.client.js#CreateFirstUserClient"] || (() => null)
+        } : {};
+
         try {
             return await RootPage({
                 config,
                 params,
                 searchParams,
-                importMap: isCreateFirstUser ? importMap : {} // Try strict importMap ONLY for this route
+                importMap: testMap
             })
         } catch (innerError: any) {
             if (
