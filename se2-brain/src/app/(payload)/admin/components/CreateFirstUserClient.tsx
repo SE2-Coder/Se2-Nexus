@@ -104,14 +104,14 @@ export const CreateFirstUserClient = ({
             redirect={admin}
             validationOperation="create"
         >
-            <EmailAndUsernameFields
+            {/* <EmailAndUsernameFields
                 className="emailAndUsername"
                 loginWithUsername={loginWithUsername}
                 operation="create"
                 readOnly={false}
                 t={t as any}
-            />
-            <PasswordField
+            /> */}
+            {/* <PasswordField
                 autoComplete="off"
                 field={{
                     name: 'password',
@@ -119,9 +119,9 @@ export const CreateFirstUserClient = ({
                     required: true
                 }}
                 path="password"
-            />
-            <ConfirmPasswordField />
-            <RenderFields
+            /> */}
+            {/* <ConfirmPasswordField /> */}
+            {/* <RenderFields
                 fields={collectionConfig.fields}
                 forceRender={true}
                 parentIndexPath=""
@@ -129,7 +129,8 @@ export const CreateFirstUserClient = ({
                 parentSchemaPath={userSlug}
                 permissions={true}
                 readOnly={false}
-            />
+            /> */}
+            <div className="debug-placeholder">DEBUG: Form Content Removed</div>
             <FormSubmit size="large">
                 {t('general:create')}
             </FormSubmit>
