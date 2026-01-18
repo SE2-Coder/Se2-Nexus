@@ -102,7 +102,7 @@ export const CreateFirstUserClient = ({
                 loginWithUsername={loginWithUsername}
                 operation="create"
                 readOnly={false}
-                t={t}
+                t={t as any}
             />
             <PasswordField
                 autoComplete="off"
