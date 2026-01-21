@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"net/http"
 	"se2-backend/internal/storage"
 
 	"github.com/gin-gonic/gin"

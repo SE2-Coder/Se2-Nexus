@@ -1,6 +1,6 @@
 package storage
 
-import "errors"
+
 
 type User struct {
 	ID           string
