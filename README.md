@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 SE2 Brain - High-Performance Backend
+# 🚀 SE2 Brain - High-Performance Backend.
 
 **Built for Scale. Engineered for Speed. Ready for Millions.**
 
