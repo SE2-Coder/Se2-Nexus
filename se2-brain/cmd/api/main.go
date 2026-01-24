@@ -29,6 +29,13 @@ func main() {
 
 	authHandler := auth.NewAuthHandler(db)
 	router := gin.Default()
+    router.HandleMethodNotAllowed = true // Return 405 instead of 404 for wrong method
+
+	// Debug Route
+	router.GET("/api/debug-routes", func(c *gin.Context) {
+		routes := router.Routes()
+		c.JSON(200, routes)
+	})
 
     // CORS Configuration
 	router.Use(func(c *gin.Context) {
