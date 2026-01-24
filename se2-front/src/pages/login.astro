@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="System Access | SE2 Nexus">
+  <main class="flex items-center justify-center min-h-screen relative overflow-hidden">
+    
+    <!-- Login Card -->
+    <div class="relative z-10 w-full max-w-md p-8 bg-[#0F0F0F]/80 backdrop-blur-md border border-gray-800 rounded-2xl shadow-2xl">
+      
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 font-mono">
+          SE2 ACCESS
+        </h1>
+        <p class="text-gray-500 text-sm mt-2 font-mono">Identify yourself</p>
+      </div>
+
+      <!-- Form -->
+      <form class="space-y-6" id="loginForm">
+        
+        <div>
+          <label for="email" class="block text-xs font-mono text-gray-400 mb-2 uppercase tracking-wider">Email Protocol</label>
+          <input 
+            type="email" 
+            id="email" 
+            class="w-full bg-[#050505] border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono text-sm placeholder-gray-700"
+            placeholder="user@se2code.engineer"
+            required
+          />
+        </div>
+
+        <div>
+           <label for="password" class="block text-xs font-mono text-gray-400 mb-2 uppercase tracking-wider">Security Key</label>
+          <input 
+            type="password" 
+            id="password" 
+            class="w-full bg-[#050505] border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono text-sm placeholder-gray-700"
+            placeholder="••••••••••••"
+            required
+          />
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] border border-blue-500/50 shadow-[0_0_15px_rgba(37,99,235,0.3)]"
+        >
+          INITIALIZE SESSION
+        </button>
+
+      </form>
+
+      <!-- Status Output -->
+      <div id="statusMessage" class="mt-6 text-center text-xs font-mono min-h-[20px]"></div>
+
+    </div>
+
+  </main>
+</Layout>
+
+<script>
+  import { login } from '../lib/api';
+
+  const form = document.getElementById('loginForm');
+  const statusDiv = document.getElementById('statusMessage');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement).value;
+
+    if (statusDiv) {
+        statusDiv.innerHTML = '<span class="text-blue-400 animate-pulse">Authenticating...</span>';
+    }
+
+    try {
+      const data = await login(email, password);
+      // Success
+      if (statusDiv) statusDiv.innerHTML = '<span class="text-emerald-400">ACCESS GRANTED. Redirecting...</span>';
+      console.log("Token:", data.token);
+      // TODO: Save token and redirect
+      setTimeout(() => window.location.href = '/', 1500);
+      
+    } catch (err) {
+      if (statusDiv) statusDiv.innerHTML = '<span class="text-red-500">ACCESS DENIED: Invalid credentials</span>';
+    }
+  });
+</script>
