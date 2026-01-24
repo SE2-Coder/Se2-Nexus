@@ -46,7 +46,7 @@ func main() {
 	})
 
 	router.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": "up"})
+		c.JSON(200, gin.H{"status": "up", "version": "v2-auth-real"})
 	})
 
 	api := router.Group("/api")
