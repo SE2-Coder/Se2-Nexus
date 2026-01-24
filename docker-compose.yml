@@ -49,6 +49,18 @@ services:
     networks:
       - se2-network
 
+  # Frontend en Astro
+  frontend:
+    build:
+      context: ./se2-front
+      dockerfile: Dockerfile
+    container_name: se2-frontend
+    ports:
+      - "3001:80"
+    restart: unless-stopped
+    networks:
+      - se2-network
+
 volumes:
   postgres_data:
     driver: local
