@@ -37,6 +37,11 @@ func main() {
 		c.JSON(200, routes)
 	})
 
+    // Catch-all 404 Debugger
+    router.NoRoute(func(c *gin.Context) {
+        c.JSON(404, gin.H{"error": "route not found", "path_received": c.Request.URL.Path, "method": c.Request.Method})
+    })
+
     // CORS Configuration
 	router.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*") // For production, restrict this to specific domains
